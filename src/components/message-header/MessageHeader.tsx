@@ -3,7 +3,7 @@ import { Person, Chat, Notifications } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
 
-export default function MessageHeader({ user, closeChatBox }) {
+export default function MessageHeader({ user, closeChatBox }: any) {
   const { nickname } = user;
 
   return (

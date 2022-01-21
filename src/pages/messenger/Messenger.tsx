@@ -5,7 +5,7 @@ import MessageHeader from "../../components/message-header/MessageHeader";
 import { useState } from "react";
 import "./messenger.css";
 
-const Messenger = ({ messageText, own }) => {
+const Messenger = ({ messageText, own }: any) => {
   const [newMessage, setNewMessage] = useState("");
   const [chatBox, setChatBox] = useState(false);
   const [allUsers, setUsers] = useState([
@@ -28,12 +28,12 @@ const Messenger = ({ messageText, own }) => {
     setChatUSer({ user_id: 0, is_active: false, nickname: "" });
   };
 
-  const findUserOnClick = (user) => {
+  const findUserOnClick = (user: any) => {
     const user1 = allUsers.filter((obj) => obj.user_id === user.user_id);
     setChatUSer(user1[0]);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     console.log(newMessage);
   };

@@ -2,11 +2,9 @@ import { useContext, useRef } from "react";
 import "./login.css";
 
 export default function Login() {
+  const username: any = useRef();
 
-  const username=useRef();
-
-
-  const handleClick = (e) => {
+  const handleClick = (e: any) => {
     e.preventDefault();
     // loginCall(
     //   { username: username.current.value },
@@ -19,9 +17,7 @@ export default function Login() {
       <div className="loginWrapper">
         <div className="loginLeft">
           <h3 className="loginLogo">Chat Application</h3>
-          <span className="loginDesc">
-           Developed by Saqib Hasanie
-          </span>
+          <span className="loginDesc">Developed by Saqib Hasanie</span>
         </div>
         <div className="loginRight">
           <form className="loginBox" onSubmit={handleClick}>
@@ -32,10 +28,13 @@ export default function Login() {
               className="loginInput"
               ref={username}
             />
-            
-            <button className="loginButton" type="submit">Log In</button>
+
+            <button className="loginButton" type="submit">
+              Log In
+            </button>
             <span className="loginForgot">Forgot Password?</span>
-            <button className="loginRegisterButton">Create a New Account
+            <button className="loginRegisterButton">
+              Create a New Account
             </button>
           </form>
         </div>
