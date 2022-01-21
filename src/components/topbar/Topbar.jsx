@@ -8,7 +8,7 @@ export default function Topbar() {
     <div className="topbarContainer">
       <div className="topbarLeft">
         <Link to="/" style={{ textDecoration: "none" }}>
-          <span className="logo">Pringles</span>
+          <span className="logo">WebChat</span>
         </Link>
       </div>
 

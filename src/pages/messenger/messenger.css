@@ -21,6 +21,8 @@
 }
 
 .chatBoxWrapper {
+  justify-content: space-between;
+  overflow-y: scroll;
 }
 
 .chatBoxTop {
@@ -52,6 +54,10 @@
   color: white;
 }
 
+.heading {
+  color: #6fc547;
+  margin-top: 11px;
+}
 .chatOnline {
   flex: 1.5;
   border-right: 2px solid #dedede;
@@ -61,11 +67,9 @@
 .chatOnlineWrapper {
   padding-right: 33px;
   padding-left: 18px;
-
-  height: 100%;
+  height: calc(100vh - 122px);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   position: relative;
 }
 
@@ -93,4 +97,8 @@
   .chatOnline {
     flex: 1px;
   }
+}
+
+li {
+  cursor: pointer;
 }

@@ -1,5 +1,6 @@
 import Login from "./pages/login/Login";
 import Messenger from "./pages/messenger/Messenger";
+import Logout from "./components/logout/logout";
 import {
   BrowserRouter as Router,
   Switch,
@@ -16,6 +17,9 @@ function App() {
         </Route>
         <Route path="/messenger">
           <Messenger />
+        </Route>
+        <Route path="/logout">
+          <Logout />
         </Route>
       </Switch>
     </Router>
