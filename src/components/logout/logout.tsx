@@ -1,5 +1,5 @@
 import Button from "@material-ui/core/Button";
-
+import { Link } from "react-router-dom";
 const Logout = () => {
   //let navigate = useNavigate();
 
@@ -9,14 +9,9 @@ const Logout = () => {
       <br />
       <br />
       <br />
-      <Button
-        size="small"
-        variant="contained"
-        color="primary"
-        onClick={(e) => {}}
-      >
+      <Link to="/" style={{ textDecoration: "none" }}>
         Sign In
-      </Button>
+      </Link>
     </div>
   );
 };

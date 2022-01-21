@@ -14,7 +14,9 @@ export default function Topbar() {
 
       <div className="topbarRight">
         <Person />
-        <span>&nbsp; Logout</span>
+        <Link to="/logout">
+          <span>&nbsp; Logout</span>
+        </Link>
       </div>
     </div>
   );
