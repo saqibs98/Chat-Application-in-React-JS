@@ -1,16 +1,17 @@
 import { useContext, useRef } from "react";
+import { AuthContext } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
+import { loginCall } from "../../apiCalls";
 import "./login.css";
+import { CircularProgress } from "@material-ui/core";
 
 export default function Login() {
   const username: any = useRef();
+  const { isFetching, dispatch } = useContext(AuthContext);
 
   const handleClick = (e: any) => {
     e.preventDefault();
-    // loginCall(
-    //   { username: username.current.value },
-    //   dispatch
-    // );
+    loginCall(username.current.value, dispatch);
   };
 
   return (
@@ -30,7 +31,7 @@ export default function Login() {
               ref={username}
             />
             <button className="loginButton" type="submit">
-              Log In
+              {isFetching ? <CircularProgress /> : "Log In"}
             </button>
             <span className="loginForgot">Forgot Password?</span>
             <button className="loginRegisterButton">

@@ -13,6 +13,13 @@
   flex: 3;
 }
 
+.link {
+  color: #fff;
+}
+.link:hover {
+  color: rgb(24, 24, 26);
+}
+
 .logo {
   font-size: 24px;
   margin-left: 20px;

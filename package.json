@@ -19,6 +19,7 @@
     "react-scripts": "4.0.3",
     "timeago.js": "^4.0.2",
     "typescript": "^4.5.5",
+    "uuid": "^8.3.2",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
@@ -46,7 +47,8 @@
     ]
   },
   "devDependencies": {
-    "@types/react-router-dom": "^5.3.3"
+    "@types/react-router-dom": "^5.3.3",
+    "@types/uuid": "^8.3.4"
   },
   "proxy": "http://localhost:8000"
 }

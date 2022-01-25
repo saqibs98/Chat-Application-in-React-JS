@@ -1,8 +1,11 @@
 import "./topbar.css";
 import { Search, Person, Chat, Notifications } from "@material-ui/icons";
+import { AuthContext } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
 
 export default function Topbar() {
+  const { user } = useContext(AuthContext);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <div className="topbarContainer">
@@ -14,7 +17,8 @@ export default function Topbar() {
 
       <div className="topbarRight">
         <Person />
-        <Link to="/logout">
+        Hi, {user} -
+        <Link to="/logout" className="link" style={{ textDecoration: "none" }}>
           <span>&nbsp; Logout</span>
         </Link>
       </div>
