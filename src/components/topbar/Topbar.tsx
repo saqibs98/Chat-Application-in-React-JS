@@ -6,6 +6,7 @@ import { useContext } from "react";
 
 export default function Topbar() {
   const { user } = useContext(AuthContext);
+  const { name } = JSON.parse(user);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <div className="topbarContainer">
@@ -17,7 +18,7 @@ export default function Topbar() {
 
       <div className="topbarRight">
         <Person />
-        Hi, {user} -
+        Hi, {name} -
         <Link to="/logout" className="link" style={{ textDecoration: "none" }}>
           <span>&nbsp; Logout</span>
         </Link>
