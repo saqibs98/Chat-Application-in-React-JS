@@ -8,57 +8,54 @@ import { io } from "socket.io-client";
 import "./messenger.css";
 import axios from "axios";
 
-const Messenger = ({ messageText, own }: any) => {
+const Messenger = () => {
   type conversation = {
     conversation: any;
   };
   const { user } = useContext(AuthContext);
-  const { id: user_id } = JSON.parse(user);
+  const { id, name } = JSON.parse(user);
   const [newMessage, setNewMessage] = useState("");
   const [chatBox, setChatBox] = useState(false);
-  const [socket, setSocket] = useState<any>(null);
-
-  const [receiverID, setReceiverID] = useState(user_id);
-  const [conversation, setConversation] = useState<any>([]);
-
-  const [allUsers, setUsers] = useState([
-    { id: 1, is_active: true, nickname: "Saqib Hasanie" },
-    { id: 2, is_active: false, nickname: "Aaqib Hasanie" },
-    { id: 3, is_active: false, nickname: "Anas Hasanie" },
+  const [onlineUsers, setOnlineUsers] = useState([
+    { id: 0, socket_id: "", name: "" },
   ]);
+  const [socket, setSocket] = useState<any>(null);
+  const [arrivalMessage, setArrivalMessage] = useState(null);
+  const [receiverID, setReceiverID] = useState(id);
+  const [conversation, setConversation] = useState<any>([]);
 
   const [chatUser, setChatUSer] = useState({
     id: 0,
-    is_active: false,
-    nickname: "",
+    socket_id: "",
+    name: "",
   });
 
   useEffect(() => {
     setSocket(io("ws://localhost:8000"));
+    socket?.on("getMessage", (data: any) => {
+      //setArrivalMessage(data);
+      console.log("Arrival message is : ", JSON.stringify(arrivalMessage));
+    });
   }, []);
 
+  // useEffect(() => {}, [arrivalMessage]);
+
   useEffect(() => {
-    socket?.on("welcome", function message(m: any) {
-      console.log(m);
+    socket?.emit("addUser", { id, name });
+    socket?.on("getOnlineUsers", (data: any) => {
+      setOnlineUsers(data);
     });
   }, [socket]);
 
-  useEffect(() => {
-    async function getConversation() {
-      const res: any = await axios.get("/messages/conversation", {
-        params: { senderID: user_id, receiverID: 3 },
-      });
-      // const newResArry = res.data.map((v: any) =>
-      //   Object.assign(v, { isSent: true })
-      // );
-      setConversation(res.data);
-      console.log("res", res.data);
-      conversation.map((e: any) => {
-        console.log(`AJSNJDASNDAS ${e}`);
-      });
-    }
-    getConversation();
-  }, []);
+  // useEffect(() => {
+  //   async function getConversation() {
+  //     const res: any = await axios.get("/messages/conversation", {
+  //       params: { senderID: id, receiverID: receiverID },
+  //     });
+  //     setConversation(res.data);
+  //   }
+  //   getConversation();
+  // }, []);
 
   const openChatBox = () => {
     setChatBox(true);
@@ -66,18 +63,28 @@ const Messenger = ({ messageText, own }: any) => {
 
   const closeChatBox = () => {
     setChatBox(false);
-    setChatUSer({ id: 0, is_active: false, nickname: "" });
+    setChatUSer({
+      id: 0,
+      socket_id: "",
+      name: "",
+    });
   };
 
   const findUserOnClick = (user: any) => {
-    const user1 = allUsers.filter((obj) => obj.id === user.id);
-    setChatUSer(user1[0]);
-    const { id } = chatUser;
+    setChatUSer(user);
+    const { id } = user;
     setReceiverID(id);
   };
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
+    if (newMessage) {
+      socket?.emit("sendMessage", {
+        senderId: id,
+        receiverId: receiverID,
+        text: newMessage,
+      });
+    }
   };
 
   return (
@@ -89,15 +96,15 @@ const Messenger = ({ messageText, own }: any) => {
             <h2 className="heading">Online Users</h2>
             <br></br>
             <ul>
-              {allUsers.map((d) => (
+              {onlineUsers.map((d) => (
                 <li
-                  key={d.id}
+                  key={d.socket_id}
                   onClick={() => {
                     openChatBox();
                     findUserOnClick(d);
                   }}
                 >
-                  {d.nickname}
+                  {d.name}
                 </li>
               ))}
             </ul>
@@ -110,11 +117,11 @@ const Messenger = ({ messageText, own }: any) => {
           )}
           {chatBox ? (
             <div className="chatBoxWrapper">
-              {conversation.map((e: any) => {
-                <Message message={e.content} own={e.senderID === user_id} />;
+              {/* {conversation.map((e: any) => {
+                <Message message={e.content} own={e.senderID === id} />;
               })}
 
-              {/* <Message message={conversation[0].content} own={true} />
+              <Message message={conversation[0].content} own={true} /> */}
               <Message
                 message={`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do`}
                 own={false}
@@ -123,7 +130,7 @@ const Messenger = ({ messageText, own }: any) => {
               <Message
                 message={`Lorem ipsum dolor aliquip ex ea commodo consequat.`}
                 own={false}
-              /> */}
+              />
               <div className="chatBoxBottom">
                 <textarea
                   className="chatMessageInput"
